@@ -1,0 +1,85 @@
+/* Google Fonts Import: Inter (Body) & Space Grotesk (Headings) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Neural Network & Glassmorphism Theme */
+    --color-neural-bg: #F4F8FC;     /* Light futuristic blue-grey background */
+    --color-neural-white: #FFFFFF;  /* Clean pure white for glass reflections */
+    --color-neural-blue: #2563EB;   /* Deep Tech Blue (Primary) */
+    --color-neural-cyan: #06B6D4;   /* Neon Cyan for active/glow states */
+    --color-neural-dark: #1E293B;   /* Slate 800 for primary text (easy on eyes) */
+    --color-neural-gray: #64748B;   /* Slate 500 for secondary text */
+  }
+}
+
+body {
+  background-color: var(--color-neural-bg);
+  color: var(--color-neural-dark);
+  font-family: 'Inter', sans-serif; /* Clean, modern body text */
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Typography Mix: Futuristic Sans-serif for headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif; 
+  color: var(--color-neural-dark);
+}
+
+.tech-text {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--color-neural-gray);
+  letter-spacing: 0.05em;
+}
+
+/* Elegant Tech Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-neural-bg); }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-neural-blue); }
+
+/* Neural Grid Pattern (Replaces the old red blueprint) 
+   Ye background mein halke blue dots ka mesh banayega */
+.bg-neural-grid {
+  background-image: radial-gradient(rgba(37, 99, 235, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* =========================================
+   GLASSMORPHISM UTILITIES 
+   ========================================= */
+
+/* Bada transparent container (Hero sections / Navbar ke liye) */
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 60px -15px rgba(0, 100, 200, 0.1);
+}
+
+/* Chote interactive feature cards ke liye */
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(37, 99, 235, 0.1);
+}
+
+/* Neural Gradient Text Utility (AI keywords highlight karne ke liye) */
+.text-glow-cyan {
+  background: linear-gradient(to right, var(--color-neural-cyan), var(--color-neural-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4));
+}
