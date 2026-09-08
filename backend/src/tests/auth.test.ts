@@ -33,8 +33,7 @@ describe("Authentication Integration Tests", () => {
 
       expect(res.status).toBe(201);
       expect(res.body.success).toBe(true);
-      expect(res.body.data).toHaveProperty("user");
-      expect(res.body.data.user.email).toBe(payload.email);
+      expect(res.body.data.email).toBe(payload.email);
     });
 
     it("should reject registration with invalid email", async () => {

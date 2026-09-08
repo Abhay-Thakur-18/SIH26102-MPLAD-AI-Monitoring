@@ -85,7 +85,7 @@ describe("Financial Monitoring & Payment Tests", () => {
     });
 
     const res = await request(app)
-      .get(`/api/v1/payments/project/${project.id}/budget`)
+      .get(`/api/v1/payments/budget/${project.id}`)
       .set("Authorization", `Bearer ${accessToken}`);
 
     expect(res.status).toBe(200);

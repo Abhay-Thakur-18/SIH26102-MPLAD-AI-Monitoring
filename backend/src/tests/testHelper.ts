@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 import { UserModel } from "../models/user.model";
 import { ProjectModel } from "../models/project.model";
 import { ContractorModel } from "../models/contractor.model";
@@ -258,7 +259,7 @@ export const createTestUserAndToken = async (
 ) => {
   const user = await UserModel.create({
     email: `test_${role.toLowerCase()}_${Date.now()}_${Math.random().toString(36).substring(7)}@example.com`,
-    password: "$2a$04$gK9tB1aIqM9sUjH9z6Z9n.1234567890abcdefghijklmnopqrstuv",
+    password: bcrypt.hashSync("Password123!", 4),
     role,
     status: UserStatus.ACTIVE,
     verification: { emailVerified: true },

@@ -51,7 +51,7 @@ describe("Audit Engine Integration Tests", () => {
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.data.assignedAuditor).toBe(auditor.id);
+    expect(res.body.data.auditor).toBe(auditor.id);
     expect(res.body.data.status).toBe(AuditStatus.ASSIGNED);
   });
 
