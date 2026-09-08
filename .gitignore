@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+.env
+*.log
+uploads/
+.DS_Store
+ai-service/__pycache__/
+ai-service/.venv/
+*.pyc
+.idea/
+.vscode/

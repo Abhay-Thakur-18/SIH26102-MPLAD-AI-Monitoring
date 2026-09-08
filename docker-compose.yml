@@ -1,0 +1,100 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: aegis_backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+      - API_PREFIX=/api/v1
+      - APP_NAME=AEGIS-MPLADS-AI
+      - APP_URL=http://localhost:8080
+      - FRONTEND_ORIGIN=http://localhost:3000
+      - MONGODB_URI=mongodb://mongodb:27017/aegis_mplads
+      - REDIS_URL=redis://redis:6379
+      - JWT_ACCESS_SECRET=aegis_mplads_super_secure_access_secret_2026_min32chars
+      - JWT_REFRESH_SECRET=aegis_mplads_super_secure_refresh_secret_2026_min32chars
+      - AI_SERVICE_URL=http://ai-service:8000
+      - INTERNAL_API_KEY=aegis_internal_ai_gateway_key_secure_2026
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    networks:
+      - aegis-network
+
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: aegis_ai_service
+    restart: unless-stopped
+    environment:
+      - INTERNAL_API_KEY=aegis_internal_ai_gateway_key_secure_2026
+    ports:
+      - "8000:8000"
+    networks:
+      - aegis-network
+
+  mongodb:
+    image: mongo:7.0
+    container_name: aegis_mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aegis-network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: aegis_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aegis-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: aegis_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+      - ai-service
+    networks:
+      - aegis-network
+
+volumes:
+  mongo_data:
+  redis_data:
+
+networks:
+  aegis-network:
+    driver: bridge
